@@ -1,6 +1,6 @@
 CREATE TABLE Cities(
 	CityId INT NOT NULL PRIMARY KEY, 
-	CityName VARCHAR(30) NOT NULL
+	CityName VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE Menus(
@@ -45,8 +45,8 @@ CREATE TABLE RestaurantWorkingTime(
 	DayId INT REFERENCES DaysOfWeek(DayId),
 	RestaurantId INT REFERENCES Restaurants(RestaurantId),
 	PRIMARY KEY(RestaurantId, DayId),
-	StartTime TIMESTAMP,
-	EndTime TIMESTAMP
+	StartTime TIME,
+	EndTime TIME
 );
 
 CREATE TABLE Jobs(
@@ -62,14 +62,6 @@ CREATE TABLE Employees(
 	DriverLicense BOOL,
 	Age INT,
 	JobId INT REFERENCES Jobs(JobId)
-	 CHECK (
-        (JobId = 3 AND DriverLicense = TRUE) OR
-        (JobId <> 3 AND DriverLicense IS NULL)
-    ),
-    CHECK (
-        (JobId IN (1, 2) AND Age >= 18) OR
-        (JobId = 3 AND Age >= 18) 
-    )
 );
 
 CREATE TABLE Customers(
@@ -87,11 +79,7 @@ CREATE TABLE Bills (
     DeliveryTime TIMESTAMP, 
     DeliveryStars INT CHECK (DeliveryStars BETWEEN 1 AND 5),
     Adress VARCHAR(255),
-    UserNote VARCHAR(255),
-    CHECK (
-        (OrderType = 'Dostava' AND EmployeeId IS NOT NULL AND DeliveryTime IS NOT NULL AND DeliveryStars IS NOT NULL AND Adress IS NOT NULL) OR 
-        (OrderType = 'Konzumacija' AND EmployeeId IS NULL AND DeliveryTime IS NULL AND DeliveryStars IS NULL AND Adress IS NULL)
-    )
+    UserNote VARCHAR(255)
 );
 
 
