@@ -16,9 +16,9 @@ CREATE TABLE FoodCategories(
 CREATE TABLE Food(
 	FoodId INT NOT NULL PRIMARY KEY,
 	FoodName VARCHAR(30) NOT NULL,
-	FoodPrice DEC(4, 2) NOT NULL,
+	FoodPrice DECIMAL(5, 2) NOT NULL,
 	CategoryId INT REFERENCES FoodCategories(CategoryId) NOT NULL,
-	Calories DEC(7,2),
+	Calories DECIMAL(7,2),
 	Availability BOOL NOT NULL
 );
 
@@ -74,7 +74,7 @@ CREATE TABLE Employees(
 
 CREATE TABLE Customers(
 	CustomerId INT NOT NULL PRIMARY KEY,
-	CustomerName VARCHAR(20) NOT NULL
+	CustomerName VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE Bills (
@@ -82,7 +82,7 @@ CREATE TABLE Bills (
     CustomerId INT REFERENCES Customers(CustomerId), 
     RestaurantId INT REFERENCES Restaurants(RestaurantId), 
     OrderType VARCHAR(20) NOT NULL CHECK (OrderType IN ('Dostava', 'Konzumacija')),
-    
+    TotalPrice DECIMAL(10, 2) not null,
 	EmployeeId INT REFERENCES Employees(EmployeeId),
     DeliveryTime TIMESTAMP, 
     DeliveryStars INT CHECK (DeliveryStars BETWEEN 1 AND 5),
@@ -99,7 +99,6 @@ CREATE TABLE FoodBill (
     BillId INT REFERENCES Bills(BillId),
     FoodId INT REFERENCES Food(FoodId),
     Quantity INT NOT NULL,
-	TotalPrice DECIMAL(10, 2),
     PRIMARY KEY (BillId, FoodId)
 );
 
